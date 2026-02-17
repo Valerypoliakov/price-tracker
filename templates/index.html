@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="text-align: center; padding: 80px 20px;">
+    <h1 style="font-size: 48px; margin-bottom: 16px;">📊 Price Tracker</h1>
+    <p style="font-size: 20px; color: #666; margin-bottom: 40px;">
+        Отслеживайте цены на товары с Ozon, Wildberries,<br>Яндекс.Маркет и MegaMarket
+    </p>
+    <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 60px;">
+        <a href="/register" class="btn btn-primary" style="font-size: 16px; padding: 14px 32px;">Начать бесплатно</a>
+        <a href="/login" class="btn" style="font-size: 16px; padding: 14px 32px; background: white; border: 1px solid #ddd;">Войти</a>
+    </div>
+    <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+        <div class="card" style="width: 220px; text-align: center;">
+            <div style="font-size: 36px; margin-bottom: 12px;">🔍</div>
+            <h3>Автопарсинг</h3>
+            <p style="color: #666; font-size: 14px; margin-top: 8px;">Цены обновляются автоматически каждый час</p>
+        </div>
+        <div class="card" style="width: 220px; text-align: center;">
+            <div style="font-size: 36px; margin-bottom: 12px;">📈</div>
+            <h3>История цен</h3>
+            <p style="color: #666; font-size: 14px; margin-top: 8px;">Смотрите динамику изменения цен на графике</p>
+        </div>
+        <div class="card" style="width: 220px; text-align: center;">
+            <div style="font-size: 36px; margin-bottom: 12px;">🎯</div>
+            <h3>Целевая цена</h3>
+            <p style="color: #666; font-size: 14px; margin-top: 8px;">Установите желаемую цену и следите за снижением</p>
+        </div>
+        <div class="card" style="width: 220px; text-align: center;">
+            <div style="font-size: 36px; margin-bottom: 12px;">🛒</div>
+            <h3>4 магазина</h3>
+            <p style="color: #666; font-size: 14px; margin-top: 8px;">Ozon, Wildberries, Яндекс.Маркет, MegaMarket</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

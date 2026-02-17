@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 560px; margin: 40px auto;">
+    <div class="card">
+        <h2 style="margin-bottom: 24px;">Добавить товар</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label>Название товара</label>
+                <input type="text" name="name" placeholder="Например: iPhone 15 Pro 256GB" required>
+            </div>
+            <div class="form-group">
+                <label>Ссылка на товар</label>
+                <input type="url" name="url" placeholder="https://www.ozon.ru/product/..." required>
+                <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">
+                    Поддерживаются: Ozon, Wildberries, Яндекс.Маркет, MegaMarket
+                </small>
+            </div>
+            <div class="form-group">
+                <label>Целевая цена (необязательно)</label>
+                <input type="number" name="target_price" placeholder="Желаемая цена в рублях" min="0" step="0.01">
+                <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">
+                    Мы отметим когда цена достигнет этого значения
+                </small>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 16px; padding: 12px;">
+                🔍 Добавить и получить цену
+            </button>
+        </form>
+        <p style="text-align: center; margin-top: 16px; font-size: 13px; color: #666;">
+            После добавления цена будет получена автоматически.<br>
+            Обновление каждый час.
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: price-tracker
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SCRAPER_API_KEY
+        value: 20a62f654bba9f847c3761b7d72d3dce
+      - key: DATABASE_URL
+        value: sqlite:///price_tracker.db
