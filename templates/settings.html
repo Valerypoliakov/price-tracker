@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 720px; margin: 40px auto;">
+    <h2 style="margin-bottom: 24px;">⚙️ Настройки</h2>
+    
+    <div class="card">
+        <h3 style="margin-bottom: 16px;">📱 Telegram уведомления</h3>
+        
+        {% if current_user.telegram_chat_id %}
+            <div style="padding: 16px; background: #eafaf1; border-radius: 8px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 32px;">✅</span>
+                    <div>
+                        <div style="font-weight: 600; color: #27ae60;">Telegram подключён</div>
+                        <div style="font-size: 13px; color: #666; margin-top: 4px;">
+                            Chat ID: {{ current_user.telegram_chat_id }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-bottom: 16px; color: #666; font-size: 14px;">
+                Вы будете получать уведомления когда:
+            </p>
+            <ul style="margin-bottom: 20px; color: #666; font-size: 14px; line-height: 1.8;">
+                <li>Цена на товар снизится</li>
+                <li>Цена достигнет вашей целевой цены</li>
+            </ul>
+            
+            <a href="/unlink_telegram" class="btn btn-danger" onclick="return confirm('Отключить Telegram?')">
+                Отключить Telegram
+            </a>
+        {% else %}
+            <div style="padding: 16px; background: #fef5e7; border-radius: 8px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 32px;">⚠️</span>
+                    <div>
+                        <div style="font-weight: 600; color: #f39c12;">Telegram не подключён</div>
+                        <div style="font-size: 13px; color: #666; margin-top: 4px;">
+                            Подключите бота для получения уведомлений о снижении цен
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 24px 0 12px 0;">Как подключить:</h4>
+            <ol style="color: #666; font-size: 14px; line-height: 2; margin-bottom: 20px;">
+                <li>Откройте Telegram и найдите бота <a href="https://t.me/price_tracker_notif_bot" target="_blank" style="color: #3498db;">@price_tracker_notif_bot</a></li>
+                <li>Нажмите <b>Start</b> или отправьте команду <code>/start</code></li>
+                <li>Скопируйте ваш Chat ID из сообщения бота</li>
+                <li>Вставьте Chat ID в поле ниже и нажмите "Подключить"</li>
+            </ol>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label>Ваш Telegram Chat ID</label>
+                    <input type="text" name="telegram_chat_id" placeholder="Например: 123456789" required 
+                           pattern="[0-9]+" title="Только цифры">
+                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">
+                        Получите Chat ID у бота командой /start
+                    </small>
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 100%; font-size: 16px; padding: 12px;">
+                    🔗 Подключить Telegram
+                </button>
+            </form>
+        {% endif %}
+    </div>
+    
+    <div class="card" style="margin-top: 20px;">
+        <h3 style="margin-bottom: 12px;">👤 Информация об аккаунте</h3>
+        <p style="color: #666; font-size: 14px;">Email: <b>{{ current_user.email }}</b></p>
+        <p style="color: #666; font-size: 14px;">Товаров отслеживается: <b>{{ current_user.products|length }}</b></p>
+    </div>
+</div>
+{% endblock %}

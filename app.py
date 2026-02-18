@@ -30,6 +30,44 @@ def update_prices():
         products = Product.query.all()
         for product in products:
             store, price = get_price(product.url)
+            if price and product.current_price:
+                old_price = product.current_price
+                # Проверяем снижение цены
+                if price < old_price:
+                    # Отправляем уведомление если есть telegram_chat_id
+                    user = User.query.get(product.user_id)
+                    if user and user.telegram_chat_id:
+                        try:
+                            from telegram_bot import send_price_alert
+                            import asyncio
+                            asyncio.run(send_price_alert(
+                                int(user.telegram_chat_id),
+                                product.name,
+                                old_price,
+                                price,
+                                product.url
+                            ))
+                        except Exception as e:
+                            print(f"Ошибка отправки уведомления: {e}")
+                
+                # Уведомление если достигнута целевая цена
+                if product.target_price and price <= product.target_price:
+                    user = User.query.get(product.user_id)
+                    if user and user.telegram_chat_id:
+                        try:
+                            from telegram_bot import send_price_alert
+                            import asyncio
+                            message = f"🎯 Целевая цена достигнута!\n\n📦 {product.name}\n💰 Цена: {price:,.0f} ₽"
+                            asyncio.run(send_price_alert(
+                                int(user.telegram_chat_id),
+                                product.name,
+                                product.current_price,
+                                price,
+                                product.url
+                            ))
+                        except Exception as e:
+                            print(f"Ошибка отправки уведомления: {e}")
+            
             if price:
                 product.current_price = price
                 history = PriceHistory(product_id=product.id, price=price)
@@ -145,6 +183,26 @@ def delete_product(product_id):
     db.session.commit()
     flash('Товар удалён', 'success')
     return redirect(url_for('dashboard'))
+
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    if request.method == 'POST':
+        telegram_chat_id = request.form.get('telegram_chat_id')
+        if telegram_chat_id:
+            current_user.telegram_chat_id = telegram_chat_id
+            db.session.commit()
+            flash('Telegram успешно подключён!', 'success')
+            return redirect(url_for('settings'))
+    return render_template('settings.html')
+
+@app.route('/unlink_telegram')
+@login_required
+def unlink_telegram():
+    current_user.telegram_chat_id = None
+    db.session.commit()
+    flash('Telegram отключён', 'success')
+    return redirect(url_for('settings'))
 
 if __name__ == '__main__':
     with app.app_context():

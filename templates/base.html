@@ -34,10 +34,12 @@
     <nav>
         <a href="/" style="font-size: 20px; font-weight: 700;">📊 Price Tracker</a>
         <div class="nav-links">
-            {% if current_user.is_authenticated %}
-                <a href="/dashboard">Мои товары</a>
-                <a href="/add_product">+ Добавить</a>
-                <a href="/logout">Выйти</a>
+            <div class="nav-links">
+    {% if current_user.is_authenticated %}
+        <a href="/dashboard">Мои товары</a>
+        <a href="/add_product">+ Добавить</a>
+        <a href="/settings">⚙️ Настройки</a>
+        <a href="/logout">Выйти</a>
             {% else %}
                 <a href="/login">Войти</a>
                 <a href="/register">Регистрация</a>
