@@ -154,3 +154,10 @@ if __name__ == '__main__':
 # Инициализация БД для продакшена
 with app.app_context():
     db.create_all()
+    
+    # Сброс БД если установлена переменная
+if os.getenv('RESET_DB') == 'true':
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+        print("Database reset complete!")
